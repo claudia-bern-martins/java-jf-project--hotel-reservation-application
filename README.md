@@ -263,4 +263,111 @@ Before you submit your project, make sure that the following files are included 
 - `HotelApplication.java`
 - Add any other custom class you may have created that is required to run your application
 
+## Rubric
 
+Use this project rubric to understand and assess the project criteria.
+
+### Object-Oriented Programming
+
+<table>
+  <tr>
+    <th>Criteria</th>
+    <th>Submission Requirements</th>
+  </tr>
+  <tr>
+    <td>Create classes to support Polymorphism</td>
+    <td>
+      <ul>
+        <li>Create and use Java Interface classes to support polymorphism: The hotel reservation application contains the IRoom interface, which is implemented by the Room class.</li>
+        <li>Subclass a parent class to support polymorphism: The FreeRoom class extends the Room class.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Use of Access Modifiers</td>
+    <td>
+      <ul>
+        <li>Define class variables as private and provide accessor and mutator methods to get and manipulate class variables: There is at least one example of the model classes (Room, Customer, Reservation) using data encapsulation.</li>
+        <li>Use variable access modifiers (such as public, private and final) to modify access: The application contains at least one example of using each of the following access modifiers: ‘public’, ‘private’, and ‘final’.</li>
+      </ul>
+      <p><strong>Note</strong>: You should use the final for the data model classes variables and public methods.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>Override an object toString method to provide a better description of the object.</td>
+    <td>
+      There is at least one example of the model classes (Room, Customer, Reservation) overriding the toString method.
+    </td>
+  </tr>
+</table>
+
+### Processing and Storing Data
+
+<table>
+  <tr>
+    <th>Criteria</th>
+    <th>Submission Requirements</th>
+  </tr>
+  <tr>
+    <td>Store and process data for an application in a Collection.</td>
+    <td>
+      <p>Collections are used to store data for:</p>
+      <ul>
+        <li>Room</li>
+        <li>Customer</li>
+        <li>Reservation</li>
+      </ul>
+      <p>Note: The collection type chosen for rooms ensures that two rooms cannot be booked at the same time.</p><br>
+      <p>The ReservationService contains for or while loops that are used to iterate over and process data in order to do the following:</p>
+      <ul>
+        <li>Search for available rooms</li>
+        <li>Search for recommended rooms</li>
+      </ul>
+      <p>Tip: A user should not be able to book a single room twice for the same date range.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>Use the static keyword to create singleton objects.</td>
+    <td>
+      <p>All of the service classes use static references to create singleton objects.</p>
+      <p>Tip: You need to create a static reference for the service class.</p>
+    </td>
+  </tr>
+</table>
+
+### Core Java Concepts
+
+<table>
+  <tr>
+    <th>Criteria</th>
+    <th>Submission Requirements</th>
+  </tr>
+  <tr>
+    <td>Use Regular Expressions to validate String input.</td>
+    <td>The Customer class should contain at least one example of validating a String to ensure that it has valid email address syntax.</td>
+  </tr>
+  <tr>
+    <td>Use of Java Types and Enumeration Classes</td>
+    <td>
+      <ul>
+        <li>Use Java types to store and process data: The application uses different Java types (String, Double, and Dates) to store data on objects.</li>
+        <li>Use Date and Calendar objects to store and process dates: The Reservation class uses Date objects for check-in and check-out dates.</li>
+        <li>Create Enumeration classes: The application contains the enumeration class RoomType.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Use Exceptions, try and catch blocks to handle error flow.</td>
+    <td>The application contains at least one example of using Exceptions to validate input and try and catch blocks to handle error flow without crashing the application.</td>
+  </tr>
+  <tr>
+    <td>Use a switch statement to process user input.</td>
+    <td>The application UI uses a switch statement to handle the user input flow.</td>
+  </tr>
+</table>
+
+>[!TIP]
+> ### Suggestions to Make Your Project Stand Out
+> 1. Customize the find-a-room method to search for paid rooms or free rooms.
+> 2. Provide a menu option from the Admin menu to populate the system with test data (Customers, Rooms and Reservations).
+> 3. Allow the users to input how many days out the room recommendation should search if there are no available rooms.
