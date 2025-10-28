@@ -224,4 +224,43 @@ Here are the main steps you'll need to complete to create the service classes:
   - `public Collection<IRoom> getAllRooms()`
   - `public Collection<Customer> getAllCustomers()`
   - `public void displayAllReservations()`
+ 
+## Create Command Line Menus
+
+In this section, we will need to create the different command line menus, so the user can interact with the application from command line. Menus will be displayed to the user from the console with different numbered options. Next, we will be using the `Scanner` class to read in the user's responses.
+
+Here are the main steps you'll need to complete to create the menu classes:
+
+- First, you'll need to create the `MainMenu` class. The `MainMenu` should have the following menu items:
+  - `1. Find and reserve a room`
+  - `2. See my reservations`
+  - `3. Create an account`
+  - `4. Admin` (open the admin menu described below)
+  - `5. Exit` (exit the application)
+- Next you'll need to create the `AdminMenu` class. The `AdminMenu` should have the following menu items:
+  - `1. See all Customers`
+  - `2. See all Rooms`
+  - `3. See all Reservations`
+  - `4. Add a Room`
+  - `5. Back to Main Menu` (returns back to the `MainMenu`
+
+## Check Your Work
+
+Once you submit your project, we'll review your work and give you feedback if there's anything that you need to work on. If you'd like to see the exact points that your reviewer will check for when looking at your work, you can have a look over the project rubric.
+
+Before you submit your project, make sure that the following files are included in your .zip file:
+- `Customer.java`
+- `IRoom.java`
+- `Room.java`
+- `FreeRoom.java`
+- `Reservation.java`
+- `CustomerService.java`
+- `ReservationService.java`
+- `HotelResource.java`
+- `AdminResource.java`
+- `MainMenu.java`
+- `AdminMenu.java`
+- `HotelApplication.java`
+- Add any other custom class you may have created that is required to run your application
+
 
