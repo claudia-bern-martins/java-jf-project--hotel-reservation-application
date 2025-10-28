@@ -74,7 +74,8 @@ The application allows customers to reserve a room. Here are the specifics:
 
 **Example**: If the customers date range search is 1/1/2020 – 1/5/2020 and all rooms are booked, the system will search again for recommended rooms using the date range 1/8/2020 - 1/12/2020. If there are no recommended rooms, the system will not return any rooms.
 
-> [!TIP] >**Rubric Tip**: The reservation should use loops to process the data when finding an open room.
+> [!TIP]
+> **Rubric Tip**: The reservation should use loops to process the data when finding an open room.
 
 - Test the application to make sure rooms can be found based on different dates from the Main menu.
 - Test the application to search for rooms that are already booked to make sure a recommended list of rooms is returned.
