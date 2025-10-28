@@ -101,7 +101,8 @@ The hotel reservation application handles all exceptions gracefully (user inputs
 - **No crashing.** The application does not crash based on user input.
 - **No unhandled exceptions**. The app has try and catch blocks that are used to capture exceptions and provide useful information to the user. There are no unhandled exceptions.
 
-> [!TIP] > **Tip**: There should exist at least one example in the model classes (Room, Customer, Reservation) that overrides both the hashcode and equals methods to utilize Collections functions like contains.
+> [!TIP]
+> **Tip**: There should exist at least one example in the model classes (Room, Customer, Reservation) that overrides both the hashcode and equals methods to utilize Collections functions like contains.
 
 ### Setup
 
@@ -194,3 +195,32 @@ Here's what you need to do to make these service classes:
   - `public void printAllReservation()`
   - Create `Collections` to store and retrieve a `Reservation`
   - Provide a `static` reference
+
+## Create Resource Classes
+
+In this section, we will need to create the resource classes so we can provide an intermediary between the UI components and services. Resource classes are used for defining the Application Programming Interface (API).
+
+> [!NOTE]
+> **Note**: APIs are a best practice and used to separate backend software from frontend software. This provides a clean separation in behavior and responsibilities for the software components.
+
+The hotel reservation application will have two resources, the `HotelResource` intended for public usage and the `AdminResource` intended for the hotel staff only.
+
+Here are the main steps you'll need to complete to create the service classes:
+
+- Now it's time to create our `api` package so we can start to add our api classes.
+  - Create a new package under `src` named `api`
+- Next you'll need to create the `HotelResource` class. The `HotelResource` should have little to no behavior contained inside the class and should make use of the Service classes to implement its methods. The `HotelResource` will have the following methods:
+  - Provide a `static` reference
+  - `public Customer getCustomer(String email)`
+  - `public void createACustomer(String email, String firstName, String lastName)`
+  - `public IRoom getRoom(String roomNumber)`
+  - `public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate)`
+  - `public Collection<IRoom> findARoom(Date checkIn, Date checkOut)`
+- Next you'll need to create the `AdminResource` class. The `AdminResource` should have little to no behavior contained inside the class and should make use of the Service classes to implement its methods. The `AdminResource` will have the following methods:
+  - Provide a `static` reference
+  - `public Customer getCustomer(String email)`
+  - `publc void addRoom(List<IRoom> rooms)`
+  - `public Collection<IRoom> getAllRooms()`
+  - `public Collection<Customer> getAllCustomers()`
+  - `public void displayAllReservations()`
+
