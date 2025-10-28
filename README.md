@@ -74,8 +74,7 @@ The application allows customers to reserve a room. Here are the specifics:
 
 **Example**: If the customers date range search is 1/1/2020 – 1/5/2020 and all rooms are booked, the system will search again for recommended rooms using the date range 1/8/2020 - 1/12/2020. If there are no recommended rooms, the system will not return any rooms.
 
-> [!TIP]
-> **Rubric Tip**: The reservation should use loops to process the data when finding an open room.
+> [!TIP] > **Rubric Tip**: The reservation should use loops to process the data when finding an open room.
 
 - Test the application to make sure rooms can be found based on different dates from the Main menu.
 - Test the application to search for rooms that are already booked to make sure a recommended list of rooms is returned.
@@ -102,8 +101,7 @@ The hotel reservation application handles all exceptions gracefully (user inputs
 - **No crashing.** The application does not crash based on user input.
 - **No unhandled exceptions**. The app has try and catch blocks that are used to capture exceptions and provide useful information to the user. There are no unhandled exceptions.
 
-> [!TIP]
-> **Tip**: There should exist at least one example in the model classes (Room, Customer, Reservation) that overrides both the hashcode and equals methods to utilize Collections functions like contains.
+> [!TIP] > **Tip**: There should exist at least one example in the model classes (Room, Customer, Reservation) that overrides both the hashcode and equals methods to utilize Collections functions like contains.
 
 ### Setup
 
@@ -224,7 +222,7 @@ Here are the main steps you'll need to complete to create the service classes:
   - `public Collection<IRoom> getAllRooms()`
   - `public Collection<Customer> getAllCustomers()`
   - `public void displayAllReservations()`
- 
+
 ## Create Command Line Menus
 
 In this section, we will need to create the different command line menus, so the user can interact with the application from command line. Menus will be displayed to the user from the console with different numbered options. Next, we will be using the `Scanner` class to read in the user's responses.
@@ -242,13 +240,14 @@ Here are the main steps you'll need to complete to create the menu classes:
   - `2. See all Rooms`
   - `3. See all Reservations`
   - `4. Add a Room`
-  - `5. Back to Main Menu` (returns back to the `MainMenu`
+  - `5. Back to Main Menu` (returns back to the `MainMenu`)
 
 ## Check Your Work
 
 Once you submit your project, we'll review your work and give you feedback if there's anything that you need to work on. If you'd like to see the exact points that your reviewer will check for when looking at your work, you can have a look over the project rubric.
 
 Before you submit your project, make sure that the following files are included in your .zip file:
+
 - `Customer.java`
 - `IRoom.java`
 - `Room.java`
@@ -366,8 +365,10 @@ Use this project rubric to understand and assess the project criteria.
   </tr>
 </table>
 
->[!TIP]
+> [!TIP]
+>
 > ### Suggestions to Make Your Project Stand Out
+>
 > 1. Customize the find-a-room method to search for paid rooms or free rooms.
 > 2. Provide a menu option from the Admin menu to populate the system with test data (Customers, Rooms and Reservations).
 > 3. Allow the users to input how many days out the room recommendation should search if there are no available rooms.
