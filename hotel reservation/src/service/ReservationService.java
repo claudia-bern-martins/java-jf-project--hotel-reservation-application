@@ -42,7 +42,7 @@ public final class ReservationService {
     }
 
     /**
-     * Retrieves the singleton instance of ReservationService, creating it first if it does not yet exist.
+     * Retrieves the singleton instance of ReservationService, creating it first if it does not yet exist
      * @return the singleton instance of ReservationService
      */
     public static ReservationService getInstance() {
@@ -54,7 +54,7 @@ public final class ReservationService {
 
     /**
      * Adds a new room to the system if a room with the given room number does not
-     * already exist.
+     * already exist
      * @param room: the room to be added
      * @throws IllegalArgumentException if a room with the given room number already exists
      */
@@ -105,7 +105,7 @@ public final class ReservationService {
     }
 
     /**
-     * Retrieves all reservations made by a specific customer.
+     * Retrieves all reservations made by a specific customer
      * @param customer: the customer whose reservations are to be retrieved
      * @return a collection of reservations made by the specified customer
      */
@@ -139,14 +139,14 @@ public final class ReservationService {
     }
 
     /**
-     * Retrieves all available rooms for the specified check-in and check-out dates.
+     * Retrieves all available rooms for the specified check-in and check-out dates
      * @param checkInDate: the desired check-in date
      * @param checkOutDate: the desired check-out date
      * @return a collection of available rooms for the given dates
      */
     public Collection<IRoom> getAvailableRooms(Date checkInDate, Date checkOutDate) {
         List<IRoom> availableRooms = new ArrayList<>();
-        for (IRoom room : this.rooms.values()) {
+        for (IRoom room : this.getAllRooms()) {
             List<Reservation> reservations = this.reservations.computeIfAbsent(
                     room.getRoomNumber(), k -> new ArrayList<>());
             if(!reservations.isEmpty()) {
@@ -166,8 +166,15 @@ public final class ReservationService {
     }
 
     /**
-     * Checks if a given date falls within a specified date range (inclusive).
-     * 
+     * Retrieves a Collection of all the rooms in the hotel
+     * @return a collection of all the rooms
+     */
+    public Collection<IRoom> getAllRooms() {
+        return this.rooms.values();
+    }
+
+    /**
+     * Checks if a given date falls within a specified date range (inclusive)
      * @param date: the date to check
      * @param beginRangeDate: the start date of the range
      * @param endRangeDate: the end date of the range
