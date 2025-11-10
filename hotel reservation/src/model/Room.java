@@ -124,7 +124,7 @@ public class Room implements IRoom {
         if (o == null || getClass() != o.getClass())
             return false;
         Room room = (Room) o;
-        return Objects.equals(getRoomNumber(), room.getRoomNumber());
+        return Objects.equals(this.getRoomNumber(), room.getRoomNumber());
     }
 
     /**
@@ -132,6 +132,6 @@ public class Room implements IRoom {
      */
     @Override
     public int hashCode() {
-        return Objects.hashCode(getRoomNumber());
+        return Objects.hashCode(this.getRoomNumber());
     }
 }

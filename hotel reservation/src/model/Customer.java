@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -102,7 +103,8 @@ public class Customer {
      */
     public void setEmail(String email) throws IllegalArgumentException {
         if(!isValidEmail(email)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid email format. " +
+                    "Email must match the format \"email@domain.extension\".");
         }
         this.email = email;
     }

@@ -46,7 +46,7 @@ public final class HotelResource {
      * Provides access to the singleton instance of HotelResource
      * @return the singleton instance of HotelResource
      */
-    public static HotelResource getInstance() {
+    public static synchronized HotelResource getInstance() {
         if (HOTEL_RESOURCE == null) {
             HOTEL_RESOURCE = new HotelResource();
         }

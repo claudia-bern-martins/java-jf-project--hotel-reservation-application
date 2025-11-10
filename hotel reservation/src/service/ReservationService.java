@@ -45,7 +45,7 @@ public final class ReservationService {
      * Retrieves the singleton instance of ReservationService, creating it first if it does not yet exist
      * @return the singleton instance of ReservationService
      */
-    public static ReservationService getInstance() {
+    public static synchronized ReservationService getInstance() {
         if (RESERVATION_SERVICE == null) {
             RESERVATION_SERVICE = new ReservationService();
         }
@@ -128,11 +128,15 @@ public final class ReservationService {
      */
     public void printAllReservation() {
         System.out.println("---   CURRENT RESERVATIONS ---");
-        for (String roomNumber : this.reservations.keySet()) {
-            System.out.println("--- --- ROOM " + roomNumber + " --- ---");
-            for (Reservation reservation : this.reservations.computeIfAbsent(
-                    roomNumber, k -> new ArrayList<>())) {
-                System.out.println(reservation);
+        if(this.reservations.isEmpty()) {
+            System.out.println("No reservations to show.");
+        } else {
+            for (String roomNumber : this.reservations.keySet()) {
+                System.out.println("--- --- ROOM " + roomNumber + " --- ---");
+                for (Reservation reservation : this.reservations.computeIfAbsent(
+                        roomNumber, k -> new ArrayList<>())) {
+                    System.out.println(reservation);
+                }
             }
         }
         System.out.println("---   END CURRENT RESERVATIONS ---");
@@ -170,7 +174,9 @@ public final class ReservationService {
      * @return a collection of all the rooms
      */
     public Collection<IRoom> getAllRooms() {
-        return this.rooms.values();
+        List<IRoom> rooms = new ArrayList<>(this.rooms.values().stream().toList());
+        rooms.sort(Comparator.comparing(IRoom::getRoomNumber));
+        return rooms;
     }
 
     /**

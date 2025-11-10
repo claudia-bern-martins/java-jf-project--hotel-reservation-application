@@ -2,9 +2,7 @@ package service;
 
 import model.Customer;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service class for managing customers in the hotel reservation application.
@@ -37,7 +35,7 @@ public final class CustomerService {
      * does not yet exist.
      * @return the singleton instance of CustomerService
      */
-    public static CustomerService getInstance() {
+    public static synchronized CustomerService getInstance() {
         if (CUSTOMER_SERVICE == null) {
             CUSTOMER_SERVICE = new CustomerService();
         }
@@ -72,6 +70,8 @@ public final class CustomerService {
      * @return a collection of all the customers
      */
     public Collection<Customer> getAllCustomers() {
-        return this.customers.values();
+        List<Customer> customers = new ArrayList<>(this.customers.values().stream().toList());
+        customers.sort(Comparator.comparing(Customer::getFullName));
+        return customers;
     }
 }
