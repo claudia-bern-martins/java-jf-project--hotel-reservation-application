@@ -52,7 +52,7 @@ public class ServiceTester {
         try {
             rs.addRoom(new Room("101", 100.0, RoomType.DOUBLE));
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         rs.addRoom(new Room("102", 50.0, RoomType.SINGLE));
@@ -83,28 +83,28 @@ public class ServiceTester {
             rs.reserveARoom(customerJohn, singleRoom, DateFormatter.getDate("2025/11/03"),
                     DateFormatter.getDate("2025/11/06"));
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         try {
             rs.reserveARoom(customerJohn, singleRoom, DateFormatter.getDate("2025/10/03"),
                     DateFormatter.getDate("2025/11/02"));
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         try {
             rs.reserveARoom(customerJohn, singleRoom, DateFormatter.getDate("2025/11/05"),
                     DateFormatter.getDate("2025/11/11"));
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         try {
             rs.reserveARoom(customerJohn, singleRoom, DateFormatter.getDate("2025/10/03"),
                     DateFormatter.getDate("2025/11/11"));
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         rs.printAllReservation();

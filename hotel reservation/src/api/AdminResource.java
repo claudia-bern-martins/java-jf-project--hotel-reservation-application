@@ -2,6 +2,7 @@ package api;
 
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -91,5 +92,14 @@ public final class AdminResource {
      */
     public void displayAllReservations() {
         this.reservationService.printAllReservation();
+    }
+
+    /**
+     * Retrieves all the reservations a customer has made
+     * @param customer: the customer that has made the reservations
+     * @return a collection of the reservations the customer has made
+     */
+    public Collection<Reservation> getCustomerReservations(Customer customer) {
+        return this.reservationService.getCustomersReservation(customer);
     }
 }

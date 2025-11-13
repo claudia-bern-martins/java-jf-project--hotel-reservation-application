@@ -50,9 +50,8 @@ public final class CustomerService {
      * @param lastName: the last name of the customer
      */
     public void addCustomer(String email, String firstName, String lastName) {
-        if (!this.customers.containsKey(email)) {
-            this.customers.put(email, new Customer(firstName, lastName, email));
-        }
+        this.customers.putIfAbsent(email, new Customer(firstName, lastName,
+                email));
     }
 
     /**
@@ -70,8 +69,8 @@ public final class CustomerService {
      * @return a collection of all the customers
      */
     public Collection<Customer> getAllCustomers() {
-        List<Customer> customers = new ArrayList<>(this.customers.values().stream().toList());
-        customers.sort(Comparator.comparing(Customer::getFullName));
-        return customers;
+        List<Customer> allCustomers = new ArrayList<>(this.customers.values().stream().toList());
+        allCustomers.sort(Comparator.comparing(Customer::getFullName));
+        return allCustomers;
     }
 }

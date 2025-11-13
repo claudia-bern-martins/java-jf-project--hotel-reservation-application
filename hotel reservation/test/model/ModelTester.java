@@ -20,7 +20,7 @@ public class ModelTester {
             Customer wrongCustomer = new Customer("first", "second", wrongEmail);
             System.out.println(wrongCustomer);
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage() + " Input given: " + wrongEmail);
+            System.out.println(e.getLocalizedMessage() + " Input given: " + wrongEmail);
         }
 
         Customer customerJohn = new Customer("John", "Doe", "jdoe@something.com");
@@ -40,7 +40,7 @@ public class ModelTester {
                     DateFormatter.getDate("2025-11-13 11:00"));
             System.out.println(reservationJohn);
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
 
         try {
@@ -48,7 +48,7 @@ public class ModelTester {
                     DateFormatter.getDate("2026/01/01"));
             System.out.println(reservationJane);
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
     }
 }
