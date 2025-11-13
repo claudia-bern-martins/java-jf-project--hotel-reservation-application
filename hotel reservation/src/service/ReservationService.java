@@ -155,10 +155,7 @@ public final class ReservationService {
                     room.getRoomNumber(), k -> new ArrayList<>());
             if(!reservations.isEmpty()) {
                 for (Reservation reservation : reservations) {
-                    if (!isDateInRange(checkInDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) &&
-                            !isDateInRange(checkOutDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) &&
-                            !isDateInRange(reservation.getCheckInDate(), checkInDate, checkOutDate) &&
-                            !isDateInRange(reservation.getCheckOutDate(), checkInDate, checkOutDate)) {
+                    if (isRoomAvailable(checkInDate, checkOutDate, reservation)) {
                         availableRooms.add(room);
                     }
                 }
@@ -192,4 +189,17 @@ public final class ReservationService {
                 || date.getTime() == endRangeDate.getTime();
     }
 
+    /**
+     * Checks if a room is available for the specified check-in and check-out dates
+     * @param checkInDate: the desired check-in date
+     * @param checkOutDate: the desired check-out date
+     * @param reservation: the existing reservation to check against
+     * @return true if the room is available, false otherwise
+     */
+    private boolean isRoomAvailable(Date checkInDate, Date checkOutDate, Reservation reservation) {
+        return !isDateInRange(checkInDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) &&
+                !isDateInRange(checkOutDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) &&
+                !isDateInRange(reservation.getCheckInDate(), checkInDate, checkOutDate) &&
+                !isDateInRange(reservation.getCheckOutDate(), checkInDate, checkOutDate);
+    }
 }

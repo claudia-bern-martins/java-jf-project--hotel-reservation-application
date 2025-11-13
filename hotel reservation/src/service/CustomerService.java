@@ -69,8 +69,8 @@ public final class CustomerService {
      * @return a collection of all the customers
      */
     public Collection<Customer> getAllCustomers() {
-        List<Customer> allCustomers = new ArrayList<>(this.customers.values().stream().toList());
-        allCustomers.sort(Comparator.comparing(Customer::getFullName));
-        return allCustomers;
+        return this.customers.values().stream()
+                .sorted(Comparator.comparing(Customer::getFullName))
+                .toList();
     }
 }
