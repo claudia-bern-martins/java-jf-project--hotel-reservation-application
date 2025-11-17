@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Singleton class that handles the admin menu interactions in a hotel
  * reservation application
+ * 
  * @author Cláudia Martins
  */
 public final class AdminMenu {
@@ -33,6 +34,7 @@ public final class AdminMenu {
 
     /**
      * Private constructor to prevent instantiation from outside the class
+     * 
      * @param sc: the Scanner instance for reading user input
      */
     private AdminMenu(Scanner sc) {
@@ -43,6 +45,7 @@ public final class AdminMenu {
 
     /**
      * Provides access to the singleton instance of AdminMenu
+     * 
      * @param sc: the Scanner instance for reading user input
      * @return the singleton instance of AdminMenu
      */
@@ -159,45 +162,84 @@ public final class AdminMenu {
      */
     private void handleRoomCreation() {
         System.out.println("\n--- ROOM CREATION ---");
-        List<IRoom> newRooms = new ArrayList<>();
-        System.out.println("How many rooms do you wish to add?");
-        int numberOfRooms = this.scanner.nextInt();
-        int i = 0;
-        while (i < numberOfRooms) {
-            IRoom newRoom = createNewRoom(i + 1);
-            newRooms.add(newRoom);
-            System.out.println("Created room: " + newRoom);
-            i++;
-        }
-        this.adminResource.addRoom(newRooms);
+        Map<String, IRoom> newRooms = new HashMap<>();
+        createRooms(newRooms);
         System.out.println("--- END ROOM CREATION ---\n");
     }
 
     /**
+     * Creates rooms based on user input
+     * 
+     * @param newRooms: a map to store the newly created rooms
+     */
+    private void createRooms(Map<String, IRoom> newRooms) {
+        try {
+            System.out.println("How many rooms do you wish to add?");
+            int numberOfRooms = 0;
+            try {
+                numberOfRooms = this.scanner.hasNextInt() ? this.scanner.nextInt()
+                        : Integer.parseInt(this.scanner.next());
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Number of rooms must be a" +
+                        " whole number.");
+            }
+
+            int i = 0;
+            while (i < numberOfRooms) {
+                IRoom newRoom = createNewRoom(i + 1, newRooms);
+                newRooms.put(newRoom.getRoomNumber(), newRoom);
+                System.out.println("Created room: " + newRoom);
+                i++;
+            }
+            this.adminResource.addRoom(newRooms.values().stream().toList());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getLocalizedMessage());
+            createRooms(newRooms);
+        }
+    }
+
+    /**
      * Creates a new room based on user input
-     * @param iteration: the current iteration number for room creation
+     *
+     * @param iteration : the current iteration number for room creation
+     * @param newRooms: a map to store the newly created rooms
      * @return the created IRoom instance
      */
-    private IRoom createNewRoom(int iteration) {
-        System.out.println("--- Room " + iteration);
+    private IRoom createNewRoom(int iteration, Map<String, IRoom> newRooms) {
+        try {
+            System.out.println("--- Room " + iteration);
 
-        System.out.println("Please insert the room number:");
-        String roomNumber = this.scanner.next();
+            System.out.println("Please insert the room number:");
+            String roomNumber = this.scanner.next();
 
-        System.out.println("Please insert the price:");
-        double price = this.scanner.hasNextDouble() ? this.scanner.nextDouble()
-                : Double.parseDouble(this.scanner.next());
+            if (this.hotelResource.getRoom(roomNumber) != null || newRooms.containsKey(roomNumber)) {
+                throw new IllegalArgumentException("A room with room number "
+                        + roomNumber + " already exists.");
+            }
 
-        System.out.println("Please select the room type:\n1. Single room\n2. Double room");
-        int typeNumber = this.scanner.nextInt();
-        if (typeNumber < 0 || typeNumber > 2) {
-            System.out.println("Invalid choice. A room can either be single (1) or double (2).\n"
-                    + "Please try creating the room again.");
-            createNewRoom(iteration);
+            System.out.println("Please insert the price:");
+            double price = 0.0;
+            try {
+                price = this.scanner.hasNextDouble() ? this.scanner.nextDouble()
+                        : Double.parseDouble(this.scanner.next());
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Price must be a number.");
+            }
+
+            System.out.println("Please select the room type:\n1. Single room\n2. Double room");
+            int typeNumber = this.scanner.nextInt();
+            if (typeNumber < 0 || typeNumber > 2) {
+                System.out.println("Invalid choice. A room can either be single (1) or double (2).\n"
+                        + "Please try creating the room again.");
+                this.createNewRoom(iteration, newRooms);
+            }
+
+            RoomType type = typeNumber == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
+            return price > 0.0 ? new Room(roomNumber, price, type) : new FreeRoom(roomNumber, type);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getLocalizedMessage());
+            return this.createNewRoom(iteration, newRooms);
         }
-
-        RoomType type = typeNumber == 1 ? RoomType.SINGLE : RoomType.DOUBLE;
-        return price > 0.0 ? new Room(roomNumber, price, type) : new FreeRoom(roomNumber, type);
     }
 
     /**

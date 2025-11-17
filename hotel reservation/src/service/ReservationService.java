@@ -90,10 +90,7 @@ public final class ReservationService {
         List<Reservation> roomReservations = this.reservations.computeIfAbsent(
                 room.getRoomNumber(), k -> new ArrayList<>());
         for (Reservation reservation : roomReservations) {
-            if (isDateInRange(checkInDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) ||
-                    isDateInRange(checkOutDate, reservation.getCheckInDate(), reservation.getCheckOutDate()) ||
-                    isDateInRange(reservation.getCheckInDate(), checkInDate, checkOutDate) ||
-                    isDateInRange(reservation.getCheckOutDate(), checkInDate, checkOutDate)) {
+            if (!isRoomAvailable(checkInDate, checkOutDate, reservation)) {
                 throw new IllegalArgumentException("This room already has a reservation in place for " +
                         "the chosen dates (" + DateFormatter.formatDate(checkInDate) + " - "
                         + DateFormatter.formatDate(checkOutDate) + "): " + reservation);

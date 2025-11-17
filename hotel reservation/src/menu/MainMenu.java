@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Singleton class that handles the main menu interactions in a hotel
  * reservation application
+ * 
  * @author Cláudia Martins
  */
 public final class MainMenu {
@@ -48,6 +49,7 @@ public final class MainMenu {
 
     /**
      * Provides access to the singleton instance of MainMenu
+     * 
      * @return the singleton instance of MainMenu
      */
     public static synchronized MainMenu getInstance() {
@@ -132,19 +134,39 @@ public final class MainMenu {
             handleAccountCreation();
         }
 
-        Date checkInDate = this.getDate("check-in");
-        Date checkOutDate = this.getDate("check-out");
-
-        IRoom chosenRoom = this.getChosenRoom(checkInDate, checkOutDate);
-        System.out.println(this.hotelResource.bookARoom(email, chosenRoom,
-                checkInDate, checkOutDate));
+        bookARoom(email);
         System.out.println("--- END RESERVATION CREATION ---\n");
     }
 
     /**
+     * Books a room for the customer associated with the given email
+     * 
+     * @param email: the email address of the customer
+     */
+    private void bookARoom(String email) {
+        try {
+            Date checkInDate = this.getDate("check-in");
+            Date checkOutDate = this.getDate("check-out");
+
+            if (checkInDate.after(checkOutDate)) {
+                throw new IllegalArgumentException("The check-out date has to be " +
+                        "later than the check-in date.");
+            }
+
+            IRoom chosenRoom = this.getChosenRoom(checkInDate, checkOutDate);
+            System.out.println(this.hotelResource.bookARoom(email, chosenRoom,
+                    checkInDate, checkOutDate));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getLocalizedMessage());
+            bookARoom(email);
+        }
+    }
+
+    /**
      * Prompts the user to enter a date and returns the parsed Date object
+     * 
      * @param type: the type of date to be entered (e.g., "check-in" or
-     *            "check-out")
+     *              "check-out")
      * @return the parsed Date object
      */
     private Date getDate(String type) {
@@ -153,6 +175,11 @@ public final class MainMenu {
             System.out.println("Please enter your desired " + type + " date " +
                     "(YYYY/MM/DD):");
             date = DateFormatter.getDate(this.scanner.next());
+            Date now = new Date();
+            if (date.before(now)) {
+                throw new IllegalArgumentException("Cannot reserve rooms for past" +
+                        " dates.");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getLocalizedMessage());
             date = this.getDate(type);
@@ -162,7 +189,8 @@ public final class MainMenu {
 
     /**
      * Prompts the user to choose a room and returns the selected IRoom object
-     * @param checkInDate: the check-in date for the reservation
+     * 
+     * @param checkInDate:  the check-in date for the reservation
      * @param checkOutDate: the check-out date for the reservation
      * @return the selected IRoom object
      */
@@ -205,7 +233,8 @@ public final class MainMenu {
 
     /**
      * Retrieves available rooms for the specified check-in and check-out dates
-     * @param checkInDate: the check-in date for the reservation
+     * 
+     * @param checkInDate:  the check-in date for the reservation
      * @param checkOutDate: the check-out date for the reservation
      * @return a Collection of available rooms
      */
