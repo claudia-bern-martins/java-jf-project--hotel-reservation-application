@@ -64,7 +64,15 @@ public final class AdminMenu {
         System.out.println("--- ADMIN MENU ---");
         printMenuOptions();
 
-        int userChoice = this.scanner.nextInt();
+        int userChoice = 0;
+        try {
+            userChoice = this.scanner.hasNextInt() ? this.scanner.nextInt()
+                    : Integer.parseInt(this.scanner.next());
+        } catch (NumberFormatException e) {
+            System.out.println("Selection must be a number.");
+            handleInputs();
+            return;
+        }
         if (userChoice != AdminMenuOptions.OPEN_MAIN_MENU.getCode()) {
             AdminMenuOptions choice = null;
             try {
@@ -227,11 +235,18 @@ public final class AdminMenu {
             }
 
             System.out.println("Please select the room type:\n1. Single room\n2. Double room");
-            int typeNumber = this.scanner.nextInt();
-            if (typeNumber < 0 || typeNumber > 2) {
+            int typeNumber = 0;
+            try {
+                typeNumber = this.scanner.hasNextInt() ? this.scanner.nextInt()
+                        : Integer.parseInt(this.scanner.next());
+            } catch (NumberFormatException e) {
+                System.out.println("Selection must be a number.");
+                return this.createNewRoom(iteration, newRooms);
+            }
+            if (typeNumber < 1 || typeNumber > 2) {
                 System.out.println("Invalid choice. A room can either be single (1) or double (2).\n"
                         + "Please try creating the room again.");
-                this.createNewRoom(iteration, newRooms);
+                return this.createNewRoom(iteration, newRooms);
             }
 
             RoomType type = typeNumber == 1 ? RoomType.SINGLE : RoomType.DOUBLE;

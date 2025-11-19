@@ -67,7 +67,15 @@ public final class MainMenu {
         System.out.println("--- MENU ---");
         printMenuOptions();
 
-        int userChoice = this.scanner.nextInt();
+        int userChoice = 0;
+        try {
+            userChoice = this.scanner.hasNextInt() ? this.scanner.nextInt()
+                    : Integer.parseInt(this.scanner.next());
+        } catch (NumberFormatException e) {
+            System.out.println("Selection must be a number.");
+            handleInputs();
+            return;
+        }
         if (userChoice != MainMenuOptions.EXIT.getCode()) {
             MainMenuOptions choice = null;
             try {
@@ -200,7 +208,14 @@ public final class MainMenu {
                 1. Find an available room\s
                 2. Book a specific room""");
         IRoom chosenRoom = null;
-        int choice = this.scanner.nextInt();
+        int choice = 0;
+        try {
+            choice = this.scanner.hasNextInt() ? this.scanner.nextInt()
+                    : Integer.parseInt(this.scanner.next());
+        } catch (NumberFormatException e) {
+            System.out.println("Selection must be a number.");
+            return this.getChosenRoom(checkInDate, checkOutDate);
+        }
         switch (choice) {
             case 1: {
                 Collection<IRoom> availableRooms = this.getAvailableRooms(checkInDate, checkOutDate);
@@ -244,11 +259,22 @@ public final class MainMenu {
         if (availableRooms.isEmpty()) {
             System.out.println("No available rooms for these dates. " +
                     "How many days out would you like to search?");
-            int daysOut = this.scanner.nextInt();
+            int daysOut = 7;
+            try {
+                daysOut = this.scanner.hasNextInt() ? this.scanner.nextInt() : Integer.parseInt(this.scanner.next());
+            } catch (NumberFormatException e) {
+                System.out.println("Selection must be a number. Defaulting to 7 days.");
+            }
+
+            if (daysOut < 1) {
+                System.out.println("Days out must be a positive number. " +
+                        "Defaulting to 7 days.");
+                daysOut = 7;
+            }
             Date newCheckInDate = new Date(checkInDate.getTime() + TimeUnit.DAYS.toMillis(daysOut));
             Date newCheckOutDate = new Date(checkOutDate.getTime() + TimeUnit.DAYS.toMillis(daysOut));
 
-            availableRooms = this.getAvailableRooms(newCheckInDate,
+            return this.getAvailableRooms(newCheckInDate,
                     newCheckOutDate);
         }
         return availableRooms;
