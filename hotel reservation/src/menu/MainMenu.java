@@ -161,9 +161,12 @@ public final class MainMenu {
                         "later than the check-in date.");
             }
 
-            IRoom chosenRoom = this.getChosenRoom(checkInDate, checkOutDate);
+            Date[] effectiveDates = new Date[2];
+            effectiveDates[0] = checkInDate;
+            effectiveDates[1] = checkOutDate;
+            IRoom chosenRoom = this.getChosenRoom(checkInDate, checkOutDate, effectiveDates);
             System.out.println(this.hotelResource.bookARoom(email, chosenRoom,
-                    checkInDate, checkOutDate));
+                    effectiveDates[0], effectiveDates[1]));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getLocalizedMessage());
             bookARoom(email);
@@ -198,11 +201,13 @@ public final class MainMenu {
     /**
      * Prompts the user to choose a room and returns the selected IRoom object
      * 
-     * @param checkInDate:  the check-in date for the reservation
-     * @param checkOutDate: the check-out date for the reservation
+     * @param checkInDate:    the check-in date for the reservation
+     * @param checkOutDate:   the check-out date for the reservation
+     * @param effectiveDates: Date array that stores the effective check-in and
+     *                        check-out dates
      * @return the selected IRoom object
      */
-    private IRoom getChosenRoom(Date checkInDate, Date checkOutDate) {
+    private IRoom getChosenRoom(Date checkInDate, Date checkOutDate, Date[] effectiveDates) {
         System.out.println("""
                 What do you wish to do?\s
                 1. Find an available room\s
@@ -214,11 +219,11 @@ public final class MainMenu {
                     : Integer.parseInt(this.scanner.next());
         } catch (NumberFormatException e) {
             System.out.println("Selection must be a number.");
-            return this.getChosenRoom(checkInDate, checkOutDate);
+            return this.getChosenRoom(checkInDate, checkOutDate, effectiveDates);
         }
         switch (choice) {
             case 1: {
-                Collection<IRoom> availableRooms = this.getAvailableRooms(checkInDate, checkOutDate);
+                Collection<IRoom> availableRooms = this.getAvailableRooms(checkInDate, checkOutDate, effectiveDates);
                 System.out.println("Available rooms:");
                 availableRooms.forEach(room -> {
                     System.out.println(room);
@@ -234,27 +239,30 @@ public final class MainMenu {
             default: {
                 System.out.println("Invalid choice. Please choose one of the " +
                         "available options");
-                chosenRoom = this.getChosenRoom(checkInDate, checkOutDate);
+                chosenRoom = this.getChosenRoom(checkInDate, checkOutDate, effectiveDates);
                 break;
             }
         }
         if (chosenRoom == null) {
             System.out.println("The chosen room does not exist. Please try " +
                     "again.");
-            chosenRoom = this.getChosenRoom(checkInDate, checkOutDate);
+            chosenRoom = this.getChosenRoom(checkInDate, checkOutDate, effectiveDates);
         }
         return chosenRoom;
     }
 
     /**
-     * Retrieves available rooms for the specified check-in and check-out dates
+     * Retrieves available rooms for the specified check-in and check-out dates.
+     * Updates effectiveDates array with the actual dates rooms were found for.
      * 
-     * @param checkInDate:  the check-in date for the reservation
-     * @param checkOutDate: the check-out date for the reservation
+     * @param checkInDate:    the check-in date for the reservation
+     * @param checkOutDate:   the check-out date for the reservation
+     * @param effectiveDates: Date array that stores the effective
+     *                        check-in and check-out dates
      * @return a Collection of available rooms
      */
     private Collection<IRoom> getAvailableRooms(Date checkInDate,
-            Date checkOutDate) {
+            Date checkOutDate, Date[] effectiveDates) {
         Collection<IRoom> availableRooms = this.hotelResource.findARoom(checkInDate, checkOutDate);
         if (availableRooms.isEmpty()) {
             System.out.println("No available rooms for these dates. " +
@@ -274,9 +282,13 @@ public final class MainMenu {
             Date newCheckInDate = new Date(checkInDate.getTime() + TimeUnit.DAYS.toMillis(daysOut));
             Date newCheckOutDate = new Date(checkOutDate.getTime() + TimeUnit.DAYS.toMillis(daysOut));
 
+            System.out.println("Showing available rooms for: " + DateFormatter.formatDate(newCheckInDate)
+                    + " - " + DateFormatter.formatDate(newCheckOutDate));
             return this.getAvailableRooms(newCheckInDate,
-                    newCheckOutDate);
+                    newCheckOutDate, effectiveDates);
         }
+        effectiveDates[0] = checkInDate;
+        effectiveDates[1] = checkOutDate;
         return availableRooms;
     }
 
